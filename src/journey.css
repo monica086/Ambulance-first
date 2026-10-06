@@ -1,0 +1,966 @@
+/* ═══════════════════════════════════════════════════════
+   JOURNEY ANIMATION — journey.css
+   6-phase patient storyboard per service
+═══════════════════════════════════════════════════════ */
+:root {
+  --jr : #c0392b;
+  --jg : #1a5c3a;
+  --jw : #ffffff;
+  --ji : #faf8f3;
+  --jl : #e0dbd0;
+  --jch: #2c2c2c;
+  --jm : #6b6b6b;
+}
+
+/* ── wrapper ─────────────────────────────────────────── */
+.jWrap {
+  margin: 48px 0;
+  border: 1px solid var(--jl);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 28px rgba(0,0,0,.10);
+  background: var(--ji);
+}
+.jWrapPreview {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+.jWrapPreview .jStage { height: 100%; min-height: 0; border-radius: 0; }
+
+/* ── header ──────────────────────────────────────────── */
+.jHead { background: var(--jr); padding: 18px 28px 14px; }
+.jTitle {
+  font-size: clamp(15px,2vw,21px);
+  font-weight: 800;
+  color: var(--jw);
+  margin: 0 0 3px;
+}
+.jSub { font-size: 12px; color: rgba(255,255,255,.82); margin: 0; }
+
+/* ═══════════════════════════════════════════════════════
+   SCENE
+═══════════════════════════════════════════════════════ */
+.jScene {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+}
+
+/* ── sky ─────────────────────────────────────────────── */
+.jSky { position: absolute; inset: 0 0 30% 0; }
+.jSkyDay   { background: linear-gradient(180deg,#4a90c4 0%,#87ceeb 60%,#b8dff0 100%); }
+.jSkyAir   { background: linear-gradient(180deg,#1565a8 0%,#4a90c4 40%,#87ceeb 70%,#b8dff0 100%); }
+.jSkyTrain { background: linear-gradient(180deg,#4a90c4 0%,#87ceeb 55%,#b8dff0 80%,#a8d5a2 100%); }
+
+/* ── ground ──────────────────────────────────────────── */
+.jGround {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 30%;
+  background: linear-gradient(180deg,#6aaa3a 0%,#4a8a2a 100%);
+}
+
+/* ── road ────────────────────────────────────────────── */
+.jRoad {
+  position: absolute;
+  bottom: 18%; left: 0; right: 0;
+  height: 18%;
+  background: #3a3a3a;
+  overflow: hidden;
+}
+.jRoad::before, .jRoad::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 3px;
+  background: #f5c518;
+}
+.jRoad::before { top: 0; }
+.jRoad::after  { bottom: 0; }
+
+.jDashes {
+  position: absolute;
+  top: 50%; left: 0;
+  width: 300%;
+  transform: translateY(-50%);
+}
+.jDashes::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 5px;
+  background: repeating-linear-gradient(
+    90deg, #fff 0, #fff 44px, transparent 44px, transparent 76px
+  );
+}
+.jDashMove { animation: dashScroll .5s linear infinite; }
+@keyframes dashScroll {
+  from { transform: translateY(-50%) translateX(0); }
+  to   { transform: translateY(-50%) translateX(-76px); }
+}
+
+/* ── road background parallax ────────────────────────── */
+.jRoadBg {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(80,60,20,.08) 0, rgba(80,60,20,.08) 2px,
+    transparent 2px, transparent 60px
+  );
+}
+.jRoadScroll { animation: roadParallax 1.2s linear infinite; }
+@keyframes roadParallax {
+  from { background-position-x: 0; }
+  to   { background-position-x: -62px; }
+}
+
+/* ── clouds ──────────────────────────────────────────── */
+.jCloud {
+  position: absolute;
+  background: rgba(255,255,255,.88);
+  border-radius: 50px;
+}
+.jCloud::before, .jCloud::after {
+  content: '';
+  position: absolute;
+  background: rgba(255,255,255,.88);
+  border-radius: 50%;
+}
+.jCloud1 { width: 90px; height: 28px; top: 12%; left: 8%; }
+.jCloud1::before { width: 46px; height: 42px; top: -18px; left: 14px; }
+.jCloud1::after  { width: 36px; height: 32px; top: -12px; left: 42px; }
+.jCloud2 { width: 70px; height: 22px; top: 28%; left: 38%; }
+.jCloud2::before { width: 34px; height: 30px; top: -13px; left: 10px; }
+.jCloud2::after  { width: 26px; height: 24px; top: -8px;  left: 30px; }
+.jCloud3 { width: 80px; height: 24px; top: 8%; left: 62%; }
+.jCloud3::before { width: 40px; height: 36px; top: -16px; left: 12px; }
+.jCloud3::after  { width: 30px; height: 26px; top: -10px; left: 38px; }
+.jCloudMove { animation: cloudDrift 5s linear infinite; }
+@keyframes cloudDrift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-80px); }
+}
+
+/* ── helipad ─────────────────────────────────────────── */
+.jHelipad {
+  position: absolute;
+  bottom: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 4;
+}
+.jHelipadL { left: 3%; }
+.jHelipadR { right: 3%; }
+.jHelipadMark {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: #ddd;
+  border: 3px solid #999;
+  display: grid;
+  place-items: center;
+  font-size: 17px;
+  font-weight: 900;
+  color: #333;
+}
+
+/* ── railway tracks ──────────────────────────────────── */
+.jTrackWrap {
+  position: absolute;
+  bottom: 20%; left: 0; right: 0;
+  height: 20px;
+  z-index: 3;
+}
+.jRail {
+  position: absolute;
+  left: 0; right: 0;
+  height: 4px;
+  background: #7a7a7a;
+  border-radius: 2px;
+}
+.jRailT { top: 0; }
+.jRailB { bottom: 0; }
+.jSleepers {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    90deg, #6b4c2a 0, #6b4c2a 10px, transparent 10px, transparent 32px
+  );
+  background-size: 42px 100%;
+}
+.jSleeperMove { animation: sleeperScroll .4s linear infinite; }
+@keyframes sleeperScroll {
+  from { background-position-x: 0; }
+  to   { background-position-x: -42px; }
+}
+
+/* ── scrolling landscape (train) ─────────────────────── */
+.jLandscape {
+  position: absolute;
+  bottom: 28%; left: 0;
+  width: 100%; height: 60px;
+  background-image:
+    repeating-linear-gradient(
+      90deg, transparent 0, transparent 56px,
+      #3a7a2a 56px, #3a7a2a 58px,
+      transparent 58px, transparent 114px
+    ),
+    linear-gradient(180deg, #6aaa3a 0%, #5a9a2a 100%);
+  background-size: 114px 100%, 100% 100%;
+}
+.jLandscapeScroll { animation: landscapeScroll 1s linear infinite; }
+@keyframes landscapeScroll {
+  from { background-position-x: 0, 0; }
+  to   { background-position-x: -114px, 0; }
+}
+
+/* ── station labels ──────────────────────────────────── */
+.jStation {
+  position: absolute;
+  bottom: 42%;
+  background: rgba(255,255,255,.92);
+  border: 1.5px solid #c4a87a;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--jch);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  z-index: 6;
+  box-shadow: 0 2px 8px rgba(0,0,0,.12);
+}
+.jStationL { left: 1%; }
+.jStationR { right: 1%; }
+
+/* ═══════════════════════════════════════════════════════
+   PHOTO CARDS — the patient story panels
+   Each card is a realistic photo with a label.
+   Three positions: left (pickup), center (onboard), right (arrival/transfer)
+═══════════════════════════════════════════════════════ */
+.jCard {
+  position: absolute;
+  z-index: 8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: opacity .55s ease, transform .55s ease;
+}
+.jCard img {
+  border-radius: 10px;
+  border: 2.5px solid rgba(255,255,255,.8);
+  box-shadow: 0 6px 24px rgba(0,0,0,.40);
+  object-fit: cover;
+  display: block;
+  width: 148px;
+  height: 98px;
+}
+.jCardLabel {
+  margin-top: 6px;
+  background: rgba(0,0,0,.70);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+  white-space: nowrap;
+  text-align: center;
+  max-width: 200px;
+  white-space: normal;
+  line-height: 1.3;
+}
+.jCardDisclaimer {
+  margin-top: 3px;
+  background: rgba(0,0,0,.50);
+  color: rgba(255,255,255,.82);
+  font-size: 9px;
+  font-style: italic;
+  padding: 2px 8px;
+  border-radius: 99px;
+  max-width: 200px;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* positions */
+.jCardLeft   { left: 2%;  bottom: 34%; }
+.jCardCenter { left: 50%; bottom: 34%; transform: translateX(-50%); }
+.jCardRight  { right: 2%; bottom: 34%; }
+
+/* transfer card overlaps arrival card — slightly higher */
+.jCardTransfer { bottom: 38%; z-index: 9; }
+
+/* fade states */
+.jCardIn  { opacity: 1; }
+.jCardOut { opacity: 0; pointer-events: none; }
+
+/* center card needs translateX preserved */
+.jCardCenter.jCardIn  { opacity: 1; transform: translateX(-50%) translateY(0); }
+.jCardCenter.jCardOut { opacity: 0; transform: translateX(-50%) translateY(8px); }
+
+/* left/right cards slide slightly */
+.jCardLeft.jCardIn   { transform: translateX(0) translateY(0); }
+.jCardLeft.jCardOut  { transform: translateX(-8px) translateY(0); }
+.jCardRight.jCardIn  { transform: translateX(0) translateY(0); }
+.jCardRight.jCardOut { transform: translateX(8px) translateY(0); }
+
+/* transfer card */
+.jCardRight.jCardTransfer.jCardIn  { transform: translateX(0) translateY(0); }
+.jCardRight.jCardTransfer.jCardOut { transform: translateX(8px) translateY(0); }
+
+/* ═══════════════════════════════════════════════════════
+   VEHICLES
+═══════════════════════════════════════════════════════ */
+.jVehicle {
+  position: absolute;
+  z-index: 10;
+  transition: left .08s linear, bottom .08s linear;
+}
+.jVehicle img {
+  display: block;
+  border-radius: 6px;
+  filter: drop-shadow(0 4px 14px rgba(0,0,0,.45));
+}
+
+/* road ambulance */
+.jAmbVehicle { bottom: calc(18% + 2px); transition: left .08s linear; }
+.jAmbVehicle img { width: 136px; height: auto; }
+.jVehicleMove img { animation: ambBounce .35s ease-in-out infinite alternate; }
+@keyframes ambBounce {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-4px); }
+}
+
+/* siren */
+.jSiren {
+  position: absolute;
+  top: -8px; left: 50%;
+  transform: translateX(-50%);
+  width: 22px; height: 7px;
+  border-radius: 3px;
+  animation: sirenFlash .4s ease-in-out infinite alternate;
+}
+@keyframes sirenFlash {
+  from { background: #e74c3c; box-shadow: 0 0 10px #e74c3c; }
+  to   { background: #2980b9; box-shadow: 0 0 10px #2980b9; }
+}
+
+/* loading arrow */
+.jLoadingArrow {
+  position: absolute;
+  top: -20px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--jr);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 99px;
+  white-space: nowrap;
+  animation: arrowPulse .6s ease-in-out infinite alternate;
+}
+@keyframes arrowPulse {
+  from { opacity: .7; transform: translateX(-50%) translateY(0); }
+  to   { opacity: 1;  transform: translateX(-50%) translateY(-3px); }
+}
+
+/* aircraft */
+.jAircraftVehicle { transition: left .08s linear, bottom .08s linear; }
+.jAircraftVehicle img { width: 148px; height: auto; }
+.jAircraftFloat img { animation: acFloat .8s ease-in-out infinite alternate; }
+@keyframes acFloat {
+  from { transform: translateY(0) rotate(-1deg); }
+  to   { transform: translateY(-8px) rotate(1deg); }
+}
+
+/* train */
+.jTrainVehicle { bottom: calc(20% + 4px); transition: left .08s linear; }
+.jTrainVehicle img { height: 76px; width: auto; max-width: 380px; }
+
+/* medical badge on train */
+.jMedBadge {
+  position: absolute;
+  top: -14px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--jr);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 10px;
+  border-radius: 99px;
+  white-space: nowrap;
+  letter-spacing: .6px;
+  box-shadow: 0 2px 8px rgba(192,57,43,.5);
+}
+
+/* ── status chip ─────────────────────────────────────── */
+.jChip {
+  position: absolute;
+  bottom: 8px; left: 50%;
+  transform: translateX(-50%);
+  background: rgba(192,57,43,.90);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 18px;
+  border-radius: 99px;
+  white-space: nowrap;
+  z-index: 20;
+  backdrop-filter: blur(4px);
+  animation: chipIn .3s ease;
+}
+@keyframes chipIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(6px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ── done overlay ────────────────────────────────────── */
+.jDoneOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 25;
+  animation: fadeIn .4s ease;
+}
+.jDoneBadge {
+  background: var(--jg);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 800;
+  padding: 16px 36px;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,.4);
+  text-align: center;
+  animation: popIn .4s ease;
+}
+.jDoneSub {
+  font-size: 13px;
+  font-weight: 500;
+  margin-top: 4px;
+  opacity: .88;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes popIn  {
+  from { transform: scale(.7); opacity: 0; }
+  to   { transform: scale(1);  opacity: 1; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   CONTROLS STRIP
+═══════════════════════════════════════════════════════ */
+.jControls {
+  padding: 16px 24px 18px;
+  background: var(--jw);
+  border-top: 1px solid var(--jl);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* step row */
+.jStepRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+}
+.jSt { display: flex; align-items: center; gap: 5px; }
+.jStDot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--jl);
+  border: 2px solid var(--jl);
+  flex-shrink: 0;
+  transition: background .3s, border-color .3s;
+}
+.jStDone .jStDot { background: var(--jr); border-color: var(--jr); }
+.jStNow  .jStDot {
+  background: var(--jr); border-color: var(--jr);
+  box-shadow: 0 0 0 4px rgba(192,57,43,.18);
+}
+.jStLbl {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--jm);
+  white-space: nowrap;
+  transition: color .3s;
+}
+.jStDone .jStLbl { color: var(--jch); font-weight: 600; }
+.jStNow  .jStLbl { color: var(--jr);  font-weight: 700; }
+.jStLine {
+  width: 22px; height: 2px;
+  background: var(--jl);
+  margin: 0 4px;
+  flex-shrink: 0;
+  transition: background .3s;
+}
+.jStDone .jStLine { background: var(--jr); }
+
+/* progress bar */
+.jBar {
+  height: 5px;
+  background: #f0ebe4;
+  border-radius: 99px;
+  overflow: hidden;
+}
+.jBarFill {
+  height: 100%;
+  background: var(--jr);
+  border-radius: 99px;
+  transition: width .08s linear;
+}
+
+/* replay / running */
+.jReplay {
+  align-self: flex-start;
+  padding: 9px 20px;
+  background: var(--jch);
+  color: var(--jw);
+  border: none;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .18s;
+}
+.jReplay:hover { background: #444; }
+.jRunning {
+  align-self: flex-start;
+  background: #fef3f2;
+  color: var(--jr);
+  border: 1px solid #fcd5d1;
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .jScene { height: 300px; }
+  .jCard img { width: 108px; height: 72px; }
+  .jAmbVehicle img { width: 100px; }
+  .jAircraftVehicle img { width: 108px; }
+  .jTrainVehicle img { height: 56px; }
+  .jStLine { width: 14px; }
+  .jStLbl { font-size: 10px; }
+}
+@media (max-width: 480px) {
+  .jScene { height: 240px; }
+  .jCard img { width: 84px; height: 56px; }
+  .jCardLabel { font-size: 9px; }
+  .jChip { font-size: 10px; padding: 4px 12px; }
+  .jDoneBadge { font-size: 14px; padding: 12px 24px; }
+  .jDoneSub { font-size: 11px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .jDashMove, .jVehicleMove img, .jSiren, .jLoadingArrow,
+  .jCloudMove, .jAircraftFloat img, .jSleeperMove,
+  .jLandscapeScroll, .jRoadScroll { animation: none !important; }
+}
+
+/* Cinematic patient-transport stage */
+.jWrap {
+  border-radius: 10px;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, .16);
+}
+.jHead { padding: 18px 26px 14px; }
+.jStage {
+  position: relative;
+  height: clamp(400px, 48vw, 580px);
+  overflow: hidden;
+  isolation: isolate;
+  background: #53666c;
+}
+.jSky, .jHorizon, .jTerrain { position: absolute; inset: 0; pointer-events: none; }
+.jSky { z-index: -4; background: linear-gradient(180deg, #647f8c 0%, #aebbb6 57%, #c5bc9e 100%); }
+.jHorizon {
+  z-index: -3;
+  top: 48%;
+  background: linear-gradient(180deg, transparent, rgba(37, 54, 48, .22)),
+    repeating-linear-gradient(90deg, transparent 0 8%, rgba(42, 60, 48, .14) 8.2% 8.7%, transparent 9% 15%);
+  filter: blur(2px);
+}
+.jTerrain {
+  z-index: -2;
+  top: 62%;
+  background: linear-gradient(180deg, rgba(89, 98, 73, .58), #5e6659 38%, #343a3a 39%, #292f31 100%);
+}
+.jStage-road .jRoad {
+  position: absolute;
+  z-index: -1;
+  right: -20%;
+  bottom: 10%;
+  left: -20%;
+  height: 19%;
+  border-top: 3px solid rgba(241, 210, 115, .78);
+  border-bottom: 3px solid rgba(241, 210, 115, .78);
+  background: repeating-linear-gradient(90deg, transparent 0 55px, rgba(255, 255, 255, .82) 55px 100px, transparent 100px 160px) center / auto 4px no-repeat, #303638;
+}
+.jRoadMoving { animation: jRoadTravel .62s linear infinite; }
+@keyframes jRoadTravel { to { background-position: -160px center; } }
+
+.jStage-air { background: #7897a4; }
+.jStage-air .jSky { background: linear-gradient(180deg, #467b9a, #92b6c1 68%, #d0d0be); }
+.jStage-air .jHorizon { top: 72%; background: linear-gradient(180deg, #7a8c7c, #455650 65%, #353d3d); }
+.jStage-air .jTerrain { top: 88%; background: linear-gradient(180deg, #313839, #252b2d); }
+.jCloudBank {
+  position: absolute;
+  z-index: -1;
+  inset: 12% -10% 33%;
+  opacity: .54;
+  background: radial-gradient(ellipse at 18% 52%, rgba(246, 249, 244, .88) 0 5%, transparent 5.5%),
+    radial-gradient(ellipse at 42% 28%, rgba(238, 244, 241, .82) 0 8%, transparent 8.5%),
+    radial-gradient(ellipse at 73% 60%, rgba(255, 255, 255, .78) 0 7%, transparent 7.5%);
+  background-size: 55% 100%;
+}
+.jCloudBankMoving { animation: jCloudTravel 1.4s linear infinite; }
+@keyframes jCloudTravel { to { background-position: -55% 0; } }
+
+.jStage-train { background: #74847c; }
+.jStage-train .jSky { background: linear-gradient(180deg, #718791, #b8c0b5 65%, #a5a18d); }
+.jStage-train .jHorizon { top: 42%; background: repeating-linear-gradient(90deg, rgba(51, 60, 55, .42) 0 3px, transparent 3px 78px); }
+.jStage-train .jTerrain { top: 54%; background: linear-gradient(180deg, #686f64, #454d49 44%, #303639 45%); }
+.jTracks {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 14%;
+  left: 0;
+  height: 13%;
+  border-block: 5px solid #858987;
+  background: repeating-linear-gradient(90deg, #49423a 0 12px, transparent 12px 43px);
+  background-size: 43px 100%;
+}
+.jTracks::before, .jTracks::after { position: absolute; right: 0; left: 0; height: 4px; content: ""; background: #9a9b96; }
+.jTracks::before { top: 22%; }
+.jTracks::after { bottom: 22%; }
+.jTracksMoving { animation: jTrackTravel .42s linear infinite; }
+@keyframes jTrackTravel { to { background-position: -43px 0; } }
+.jStationName {
+  position: absolute;
+  z-index: 2;
+  top: 9%;
+  right: 4%;
+  padding: 8px 12px;
+  background: rgba(24, 44, 48, .8);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+
+.jDestination {
+  position: absolute;
+  z-index: 1;
+  right: -4%;
+  bottom: 19%;
+  width: min(39%, 500px);
+  height: 57%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transform: translateX(5%);
+  transition: opacity 1s ease, transform 1s ease;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 18%);
+  mask-image: linear-gradient(90deg, transparent, #000 18%);
+}
+.jDestinationVisible { opacity: .94; transform: translateX(0); }
+.jDestination-air, .jDestination-train {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 4%;
+  background: linear-gradient(180deg, #53646a, #8d9b96 38%, #555d56 39%, #303638 100%);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-align: center;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, .8);
+}
+.jDestination-air { clip-path: polygon(8% 28%, 19% 28%, 19% 18%, 35% 18%, 35% 9%, 81% 9%, 81% 24%, 100% 24%, 100% 100%, 0 100%, 0 45%); }
+.jDestination-train { right: 0; width: 44%; background: linear-gradient(180deg, #657b84 0 22%, #9a9b8e 23% 29%, #52645d 30% 60%, #343b3b 61%); }
+.jDestination-train span { padding: 7px 10px; background: rgba(24, 44, 48, .82); }
+.jHelipad {
+  position: absolute;
+  z-index: 2;
+  right: 12%;
+  bottom: 18%;
+  display: grid;
+  width: 70px;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 3px solid rgba(255, 255, 255, .9);
+  border-radius: 50%;
+  background: rgba(45, 58, 58, .56);
+  color: #fff;
+  font-size: 30px;
+  font-weight: 800;
+  opacity: 0;
+  transition: opacity .6s;
+}
+.jHelipadVisible { opacity: 1; }
+
+.jVehicle {
+  position: absolute;
+  z-index: 4;
+  bottom: 20%;
+  display: block;
+  width: min(31%, 370px);
+  max-height: 35%;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 15px 16px rgba(0, 0, 0, .36));
+  transition: left .07s linear, bottom .08s linear, transform .4s ease;
+}
+.jVehicle-road { bottom: 20%; }
+.jVehicle-air { bottom: 23%; width: min(34%, 410px); }
+.jVehicle-train { z-index: 3; bottom: 22%; width: min(49%, 600px); max-height: 25%; }
+.jVehicleTraveling { filter: drop-shadow(0 17px 18px rgba(0, 0, 0, .48)); }
+.jVehicleLoading { filter: drop-shadow(0 15px 16px rgba(0, 0, 0, .48)); }
+
+.jPatient {
+  position: absolute;
+  z-index: 6;
+  bottom: 18%;
+  display: block;
+  width: min(43%, 540px);
+  max-height: 62%;
+  object-fit: contain;
+  object-position: center bottom;
+  opacity: 0;
+  transform: translateY(2%);
+  transition: left .09s linear, width .7s ease, opacity .5s ease, transform .65s ease;
+  filter: drop-shadow(0 12px 16px rgba(0, 0, 0, .32));
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 92%, transparent);
+}
+.jPatientVisible { opacity: 1; transform: translateY(0); }
+.jPatientLoading { width: min(35%, 430px); transform: translateY(0) scale(.94); }
+.jPatientTransfer { width: min(32%, 390px); }
+
+.jInterior {
+  position: absolute;
+  z-index: 9;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(1.035);
+  transition: opacity .8s ease, transform 1.2s ease;
+  pointer-events: none;
+}
+.jInteriorVisible { opacity: 1; transform: scale(1); }
+.jInterior > img { width: 100%; height: 100%; object-fit: cover; object-position: center 48%; }
+.jInteriorShade { position: absolute; inset: 35% 0 0; background: linear-gradient(180deg, transparent, rgba(5, 15, 20, .76)); }
+.jInteriorLabel { position: absolute; right: 5%; bottom: 8%; left: 5%; display: flex; flex-direction: column; gap: 5px; color: #fff; text-shadow: 0 2px 8px rgba(0, 0, 0, .6); }
+.jInteriorLabel span { color: #ffcfb8; font-size: 11px; font-weight: 800; letter-spacing: .12em; }
+.jInteriorLabel strong { font-size: clamp(16px, 2.4vw, 26px); }
+.jCareCue, .jDoorCue {
+  position: absolute;
+  z-index: 11;
+  top: 7%;
+  left: 5%;
+  padding: 8px 12px;
+  border-left: 3px solid #ed604c;
+  background: rgba(10, 25, 31, .76);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+.jCaption {
+  position: absolute;
+  z-index: 12;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  min-height: 43px;
+  padding: 14px 18px 10px;
+  background: linear-gradient(0deg, rgba(12, 20, 23, .84), transparent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-align: center;
+}
+.jCompletion {
+  position: absolute;
+  z-index: 14;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 24px;
+  background: rgba(10, 25, 28, .52);
+  color: #fff;
+  text-align: center;
+  animation: jCompletionIn .65s ease both;
+}
+.jCompletion strong { font-size: clamp(21px, 3.8vw, 38px); }
+.jCompletion span { font-size: clamp(14px, 2vw, 20px); }
+@keyframes jCompletionIn { from { opacity: 0; } to { opacity: 1; } }
+
+.jPlayback { display: flex; min-height: 25px; flex-direction: column; gap: 13px; padding: 0 24px 18px; background: var(--jw); }
+.jProgressTrack { height: 3px; overflow: hidden; background: #e9e4dc; }
+.jProgressFill { height: 100%; background: var(--jr); transition: width .08s linear; }
+.jReplay { align-self: flex-start; padding: 9px 16px; border: 0; border-radius: 5px; background: var(--jch); color: var(--jw); font-size: 13px; font-weight: 700; cursor: pointer; }
+.jReplay:hover { background: #444; }
+
+@media (max-width: 700px) {
+  .jStage { height: 390px; }
+  .jVehicle { width: 42%; }
+  .jVehicle-train { width: 56%; }
+  .jPatient { width: 58%; }
+  .jPatientLoading { width: 47%; }
+  .jPatientTransfer { width: 43%; }
+  .jDestination { width: 48%; height: 47%; }
+  .jInteriorLabel strong { max-width: 80%; }
+}
+@media (max-width: 420px) {
+  .jStage { height: 340px; }
+  .jHead { padding-inline: 18px; }
+  .jVehicle { width: 46%; }
+  .jVehicle-train { width: 61%; }
+  .jPatient { width: 63%; }
+  .jPatientLoading { width: 51%; }
+  .jPatientTransfer { width: 48%; }
+  .jCaption { font-size: 9px; }
+  .jStationName { max-width: 70%; font-size: 9px; }
+  .jPlayback { padding-inline: 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jStage *, .jStage *::before, .jStage *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+}
+
+.jVehicleAssembly {
+  position: absolute;
+  z-index: 4;
+  bottom: 20%;
+  width: min(31%, 370px);
+  transition: left .07s linear, bottom .08s linear, transform .4s ease;
+}
+.jVehicleAssembly-air { bottom: 23%; width: min(34%, 410px); }
+.jVehicleAssembly-train { z-index: 3; bottom: 22%; width: min(49%, 600px); }
+.jVehicleAssemblyTraveling { filter: drop-shadow(0 17px 18px rgba(0, 0, 0, .46)); }
+.jVehicleAssemblyLoading { filter: drop-shadow(0 15px 16px rgba(0, 0, 0, .46)); }
+.jVehicleAssembly .jVehicle {
+  position: relative;
+  inset: auto;
+  display: block;
+  width: 100%;
+  max-height: none;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 10px 12px rgba(0, 0, 0, .28));
+  transition: none;
+}
+.jVehicleAssembly-road .jVehicle { clip-path: polygon(0 18%, 12% 18%, 19% 6%, 75% 6%, 100% 30%, 100% 75%, 88% 77%, 83% 96%, 73% 96%, 68% 77%, 33% 77%, 28% 96%, 18% 96%, 13% 77%, 0 75%); }
+.jVehicleAssembly-air .jVehicle { clip-path: polygon(0 42%, 37% 42%, 45% 12%, 53% 5%, 61% 42%, 100% 42%, 100% 59%, 61% 59%, 53% 94%, 45% 85%, 37% 59%, 0 59%); }
+.jVehicleAssembly-train .jVehicle { clip-path: polygon(0 17%, 6% 4%, 93% 4%, 100% 17%, 100% 70%, 95% 82%, 92% 95%, 86% 95%, 84% 80%, 17% 80%, 15% 95%, 9% 95%, 7% 80%, 0 70%); }
+.jCabinCutaway {
+  position: absolute;
+  z-index: 2;
+  top: 25%;
+  left: 25%;
+  width: 48%;
+  height: 39%;
+  border: 1px solid rgba(235, 244, 246, .9);
+  border-radius: 4px;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(.92);
+  transition: opacity .35s ease, transform .45s ease;
+  box-shadow: 0 0 12px rgba(10, 22, 27, .6);
+}
+.jCabinCutawayVisible { opacity: 1; transform: scale(1); }
+
+@media (max-width: 700px) {
+  .jVehicleAssembly { width: 42%; }
+  .jVehicleAssembly-air { width: 44%; }
+  .jVehicleAssembly-train { width: 56%; }
+  .jCabinCutaway { top: 24%; left: 25%; width: 48%; height: 40%; }
+}
+@media (max-width: 420px) {
+  .jVehicleAssembly { width: 46%; }
+  .jVehicleAssembly-air { width: 48%; }
+  .jVehicleAssembly-train { width: 61%; }
+}
+
+.jEmergencyReflections {
+  position: absolute;
+  z-index: 7;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 4% 40%, rgba(211, 45, 41, .22), transparent 30%),
+    radial-gradient(ellipse at 96% 38%, rgba(51, 135, 183, .2), transparent 30%);
+  animation: jEmergencyPulse .7s steps(2, end) infinite;
+}
+@keyframes jEmergencyPulse {
+  0%, 49% { opacity: .32; }
+  50%, 100% { opacity: .9; }
+}
+
+.jRoadAnimeScene {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #263d55;
+}
+.jAnimeHospital { transition: opacity .8s ease; }
+.jAnimeIncident { transition: opacity .6s ease; }
+.jAnimeAmbulance { transition: transform .12s linear; }
+.jAnimeBeacon { animation: jAnimeBeaconFlash .38s steps(2, end) infinite; }
+.jAnimeOpenDoors { transform-origin: 4px 320px; animation: jAnimeDoorOpen .35s ease-out both; }
+.jAnimeWheel { transform-box: fill-box; transform-origin: center; }
+.jAnimeWheelMoving { animation: jAnimeWheelSpin .34s linear infinite; }
+.jAnimeCabinHidden { opacity: 0; }
+.jAnimeCabinVisible { opacity: 1; }
+.jAnimePatientLoading { animation: jAnimeStretcherRush .32s ease-in-out infinite alternate; }
+.jAnimePatientTransfer { animation: jAnimeTransferRush .48s ease-in-out infinite alternate; }
+.jAnimeMedicSecond { animation: jAnimeMedicRun .28s ease-in-out infinite alternate; }
+.jAnimeInteriorPanel { animation: jAnimeInteriorReveal .55s ease both; }
+.jAnimeRoadLinesMoving { animation: jAnimeRoadScroll .55s linear infinite; }
+.jAnimeParallax { animation: jAnimeParallaxScroll 1.6s linear infinite; }
+.jAnimeCloudTravel { animation: jAnimeCloudScroll 1.8s linear infinite; }
+.jAnimeSleepersMoving { animation: jAnimeRailScroll .42s linear infinite; }
+.jAnimeAircraft { transition: transform .06s linear; }
+.jAnimeDestinationStation { transition: opacity .8s ease; }
+.jAnimeTravel .jAnimeAmbulance { animation: jAnimeVanBounce .34s ease-in-out infinite alternate; }
+.jAnimeTravel .jAnimeHospital { opacity: .08; }
+
+@keyframes jAnimeBeaconFlash { 0%, 49% { opacity: 1; } 50%, 100% { opacity: .32; } }
+@keyframes jAnimeDoorOpen { from { opacity: .3; transform: rotate(18deg); } to { opacity: 1; transform: rotate(0); } }
+@keyframes jAnimeWheelSpin { to { transform: rotate(360deg); } }
+@keyframes jAnimeStretcherRush { from { translate: 0 0; } to { translate: 4px -2px; } }
+@keyframes jAnimeTransferRush { from { translate: 0 0; } to { translate: 5px -1px; } }
+@keyframes jAnimeMedicRun { from { translate: 0 0; } to { translate: -2px -3px; } }
+@keyframes jAnimeInteriorReveal { from { opacity: 0; transform: scale(.97); } to { opacity: 1; transform: scale(1); } }
+@keyframes jAnimeRoadScroll { to { transform: translateX(-240px); } }
+@keyframes jAnimeParallaxScroll { to { transform: translateX(-36px); } }
+@keyframes jAnimeCloudScroll { to { transform: translateX(-180px); } }
+@keyframes jAnimeRailScroll { to { transform: translateX(-84px); } }
+@keyframes jAnimeVanBounce { from { translate: 0 0; } to { translate: 0 -2px; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .jRoadAnimeScene *, .jRoadAnimeScene *::before, .jRoadAnimeScene *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}

@@ -1,0 +1,354 @@
+/* ═══════════════════════════════════════════════════════
+   RealisticMedicalJourney.css
+   Cinematic photo-based patient journey component
+═══════════════════════════════════════════════════════ */
+
+.rmj {
+  --rmj-accent : #c0392b;
+  --rmj-white  : #ffffff;
+  --rmj-cream  : #faf8f3;
+  --rmj-border : #e0dbd0;
+  --rmj-dark   : #1c1c1c;
+  --rmj-mid    : #5a5a5a;
+
+  margin        : 48px 0;
+  border-radius : 18px;
+  overflow      : hidden;
+  border        : 1px solid var(--rmj-border);
+  box-shadow    : 0 6px 36px rgba(0,0,0,.13);
+  background    : var(--rmj-cream);
+  font-family   : inherit;
+}
+
+/* ── header ──────────────────────────────────────────── */
+.rmj-head {
+  background : var(--rmj-accent);
+  padding    : 20px 28px 16px;
+}
+.rmj-tag {
+  display       : inline-block;
+  font-size     : 10px;
+  font-weight   : 800;
+  letter-spacing: 1.5px;
+  color         : rgba(255,255,255,.75);
+  margin-bottom : 6px;
+  text-transform: uppercase;
+}
+.rmj-title {
+  font-size  : clamp(16px, 2.2vw, 22px);
+  font-weight: 800;
+  color      : #fff;
+  margin     : 0 0 5px;
+  line-height: 1.25;
+}
+.rmj-sub {
+  font-size  : 13px;
+  color      : rgba(255,255,255,.85);
+  margin     : 0;
+  line-height: 1.5;
+}
+.rmj-disclaimer {
+  font-size  : 11px;
+  font-style : italic;
+  color      : rgba(255,255,255,.65);
+  margin     : 6px 0 0;
+}
+
+/* ── cinematic stage ─────────────────────────────────── */
+.rmj-stage {
+  position  : relative;
+  height    : 420px;
+  overflow  : hidden;
+  background: #111;
+}
+
+/* photo frame — stacked absolutely */
+.rmj-frame {
+  position: absolute;
+  inset   : 0;
+  overflow: hidden;
+}
+
+/* incoming frame fades in */
+.rmj-frame-in {
+  animation: rmjFadeIn .6s ease forwards;
+  z-index  : 2;
+}
+
+/* outgoing frame fades out */
+.rmj-frame-out {
+  animation: rmjFadeOut .6s ease forwards;
+  z-index  : 1;
+}
+
+@keyframes rmjFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes rmjFadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* photo fills the frame */
+.rmj-img {
+  width     : 100%;
+  height    : 100%;
+  object-fit: cover;
+  display   : block;
+}
+
+.rmj-missing-asset {
+  width           : 100%;
+  height          : 100%;
+  box-sizing      : border-box;
+  padding         : 24px;
+  display         : flex;
+  flex-direction  : column;
+  align-items     : center;
+  justify-content : center;
+  gap             : 10px;
+  text-align      : center;
+  color           : #fff;
+  background      : radial-gradient(ellipse at center, #263746 0%, #111 78%);
+}
+.rmj-missing-asset > span {
+  color         : rgba(255,255,255,.65);
+  font-size     : 10px;
+  font-weight   : 800;
+  letter-spacing: 1.5px;
+}
+.rmj-missing-asset > strong {
+  font-size: clamp(16px, 2vw, 22px);
+}
+.rmj-missing-asset > code {
+  max-width : 100%;
+  color     : rgba(255,255,255,.75);
+  font-size : 12px;
+  overflow-wrap: anywhere;
+}
+
+/* ── Ken Burns variants ──────────────────────────────── */
+.rmj-kb-zoomIn {
+  animation: rmjKbZoomIn 4.5s ease-out forwards;
+  transform-origin: center center;
+}
+.rmj-kb-zoomOut {
+  animation: rmjKbZoomOut 4.5s ease-out forwards;
+  transform-origin: center center;
+}
+.rmj-kb-panRight {
+  animation: rmjKbPanRight 4.5s ease-out forwards;
+  transform-origin: left center;
+}
+.rmj-kb-panLeft {
+  animation: rmjKbPanLeft 4.5s ease-out forwards;
+  transform-origin: right center;
+}
+
+@keyframes rmjKbZoomIn {
+  from { transform: scale(1.0);  }
+  to   { transform: scale(1.08); }
+}
+@keyframes rmjKbZoomOut {
+  from { transform: scale(1.08); }
+  to   { transform: scale(1.0);  }
+}
+@keyframes rmjKbPanRight {
+  from { transform: scale(1.06) translateX(-2%); }
+  to   { transform: scale(1.06) translateX(2%);  }
+}
+@keyframes rmjKbPanLeft {
+  from { transform: scale(1.06) translateX(2%);  }
+  to   { transform: scale(1.06) translateX(-2%); }
+}
+
+/* vignette overlay */
+.rmj-vignette {
+  position  : absolute;
+  inset     : 0;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,.55) 100%);
+  z-index   : 3;
+  pointer-events: none;
+}
+
+/* service label bottom-left */
+.rmj-service-label {
+  position     : absolute;
+  bottom       : 14px;
+  left         : 18px;
+  z-index      : 5;
+  background   : rgba(0,0,0,.62);
+  color        : rgba(255,255,255,.9);
+  font-size    : 11px;
+  font-weight  : 700;
+  letter-spacing: 1px;
+  padding      : 4px 12px;
+  border-radius: 99px;
+  backdrop-filter: blur(4px);
+  text-transform: uppercase;
+}
+
+/* completed overlay */
+.rmj-done {
+  position  : absolute;
+  inset     : 0;
+  background: rgba(0,0,0,.52);
+  display   : flex;
+  align-items: center;
+  justify-content: center;
+  z-index   : 10;
+  animation : rmjFadeIn .5s ease forwards;
+}
+.rmj-done-badge {
+  background   : #1a5c3a;
+  color        : #fff;
+  border-radius: 16px;
+  padding      : 20px 40px;
+  text-align   : center;
+  box-shadow   : 0 6px 28px rgba(0,0,0,.45);
+  animation    : rmjPopIn .4s ease forwards;
+  display      : flex;
+  flex-direction: column;
+  gap          : 6px;
+}
+.rmj-done-check {
+  font-size  : 32px;
+  line-height: 1;
+}
+.rmj-done-badge strong {
+  font-size  : 18px;
+  font-weight: 800;
+}
+.rmj-done-badge span {
+  font-size: 13px;
+  opacity  : .85;
+}
+@keyframes rmjPopIn {
+  from { transform: scale(.75); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+/* ── step tracker ────────────────────────────────────── */
+.rmj-steps {
+  display    : flex;
+  align-items: center;
+  flex-wrap  : wrap;
+  padding    : 14px 20px 0;
+  background : #fff;
+  gap        : 0;
+}
+.rmj-step {
+  display    : flex;
+  align-items: center;
+  gap        : 5px;
+  background : none;
+  border     : none;
+  cursor     : pointer;
+  padding    : 4px 0;
+}
+.rmj-dot {
+  width        : 10px;
+  height       : 10px;
+  border-radius: 50%;
+  background   : #e0dbd0;
+  border       : 2px solid #e0dbd0;
+  flex-shrink  : 0;
+  transition   : background .3s, border-color .3s, box-shadow .3s;
+}
+.rmj-step-done .rmj-dot {
+  background  : var(--rmj-accent);
+  border-color: var(--rmj-accent);
+}
+.rmj-step-now .rmj-dot {
+  background  : var(--rmj-accent);
+  border-color: var(--rmj-accent);
+  box-shadow  : 0 0 0 4px color-mix(in srgb, var(--rmj-accent) 20%, transparent);
+}
+.rmj-step-label {
+  font-size  : 11px;
+  font-weight: 500;
+  color      : #999;
+  white-space: nowrap;
+  transition : color .3s;
+}
+.rmj-step-done .rmj-step-label { color: var(--rmj-dark); font-weight: 600; }
+.rmj-step-now  .rmj-step-label { color: var(--rmj-accent); font-weight: 700; }
+.rmj-step-line {
+  width      : 22px;
+  height     : 2px;
+  background : #e0dbd0;
+  margin     : 0 4px;
+  flex-shrink: 0;
+  transition : background .3s;
+}
+.rmj-step-done .rmj-step-line { background: var(--rmj-accent); }
+
+/* ── progress bar ────────────────────────────────────── */
+.rmj-bar {
+  height    : 4px;
+  background: #f0ebe4;
+  margin    : 10px 20px 0;
+  border-radius: 99px;
+  overflow  : hidden;
+}
+.rmj-bar-fill {
+  height        : 100%;
+  background    : var(--rmj-accent);
+  border-radius : 99px;
+  transition    : width .1s linear;
+}
+
+/* ── footer ──────────────────────────────────────────── */
+.rmj-footer {
+  padding   : 12px 20px 16px;
+  background: #fff;
+  border-top: 1px solid var(--rmj-border);
+  display   : flex;
+  align-items: center;
+}
+.rmj-replay {
+  padding      : 9px 22px;
+  background   : var(--rmj-dark);
+  color        : #fff;
+  border       : none;
+  border-radius: 10px;
+  font-size    : 13px;
+  font-weight  : 700;
+  cursor       : pointer;
+  transition   : background .18s;
+}
+.rmj-replay:hover { background: #333; }
+.rmj-running {
+  font-size  : 12px;
+  font-weight: 600;
+  color      : var(--rmj-accent);
+  background : color-mix(in srgb, var(--rmj-accent) 8%, transparent);
+  border     : 1px solid color-mix(in srgb, var(--rmj-accent) 25%, transparent);
+  border-radius: 10px;
+  padding    : 7px 16px;
+}
+
+/* ── responsive ──────────────────────────────────────── */
+@media (max-width: 768px) {
+  .rmj-stage  { height: 300px; }
+  .rmj-head   { padding: 16px 18px 12px; }
+  .rmj-steps  { padding: 10px 14px 0; }
+  .rmj-bar    { margin: 8px 14px 0; }
+  .rmj-footer { padding: 10px 14px 14px; }
+  .rmj-step-line { width: 14px; }
+  .rmj-step-label { font-size: 10px; }
+}
+@media (max-width: 480px) {
+  .rmj-stage  { height: 220px; }
+  .rmj-title  { font-size: 15px; }
+  .rmj-sub    { font-size: 12px; }
+  .rmj-done-badge { padding: 14px 24px; }
+  .rmj-done-badge strong { font-size: 15px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rmj-frame-in, .rmj-frame-out,
+  .rmj-kb-zoomIn, .rmj-kb-zoomOut,
+  .rmj-kb-panRight, .rmj-kb-panLeft,
+  .rmj-done, .rmj-done-badge { animation: none !important; }
+}

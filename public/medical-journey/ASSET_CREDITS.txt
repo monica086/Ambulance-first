@@ -1,0 +1,49 @@
+Air and train service preview photographs
+
+air-patient-loading.jpg
+  "Airlift from 26 December 2006 Car Crash - 2"
+  Creator: Mlaboda
+  License: CC BY-SA 4.0
+  Source: https://commons.wikimedia.org/wiki/File:Airlift_from_26_December_2006_Car_Crash_-_2.JPG
+
+air-ambulance-interior.jpg
+  Indian Navy patient evacuation inside an aircraft
+  Credit: Indian Navy
+  License: GODL-India
+  Source: Wikimedia Commons
+
+air-hospital-arrival.jpg
+  "Hampshire and Isle of Wight Air Ambulance G-HIOW on the Queen Alexandra Hospital Helipad (P1040116)"
+  Creator: Deirge Ó Dhaoinebeaga
+  License: CC BY-SA 4.0
+  Source: https://commons.wikimedia.org/wiki/File:Hampshire_and_Isle_of_Wight_Air_Ambulance_G-HIOW_on_the_Queen_Alexandra_Hospital_Helipad_(P1040116).jpg
+
+air-patient-transfer.jpg
+  "US Navy 071215-N-3659B-065 Medical personnel aboard the aircraft carrier USS Ronald Reagan (CVN 76) transfer a patient from an HH-60H Seahawk"
+  Creator: Mass Communication Specialist 2nd Class Joseph M. Buliavac, U.S. Navy
+  License: Public domain
+  Source: https://commons.wikimedia.org/wiki/File:US_Navy_071215-N-3659B-065_Medical_personnel_aboard_the_aircraft_carrier_USS_Ronald_Reagan_(CVN_76)_transfer_a_patient_from_an_HH-60H_Seahawk.jpg
+
+train-patient-loading.jpg
+  "Loading patients on a hospital train (4644487533)"
+  Credit: National Library of Medicine - History of Medicine
+  License: No restrictions
+  Source: https://commons.wikimedia.org/wiki/File:Loading_patients_on_a_hospital_train_(4644487533).jpg
+
+train-patient-stretcher.jpg
+  "Interior of a ward on a British Ambulance Train in France (2957856955)"
+  Credit: National Library of Scotland
+  License: No restrictions
+  Source: https://commons.wikimedia.org/wiki/File:Interior_of_a_ward_on_a_British_Ambulance_Train_in_France_(2957856955).jpg
+
+train-medical-compartment.jpg
+  "Interior coche unificado ambulancia del Ferrocarril Ceuta-Tetuán"
+  Credit: Archivo histórico de Zaragoza
+  License: CC BY-SA 2.5
+  Source: https://commons.wikimedia.org/wiki/File:Interior_coche_unificado_ambulancia_del_Ferrocarril_Ceuta-Tetu%C3%A1n.JPG
+
+train-arrival.jpg
+  "Howrah–Puri Vande Bharat Express at Balasore railway station 1"
+  Creator: খাঁ শুভেন্দু
+  License: CC BY-SA 4.0
+  Source: https://commons.wikimedia.org/wiki/File:Howrah%E2%80%93Puri_Vande_Bharat_Express_at_Balasore_railway_station_1.jpg

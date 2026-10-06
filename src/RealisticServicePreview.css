@@ -1,0 +1,82 @@
+.rspJourneyIndicator {
+  position: absolute;
+  z-index: 4;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  color: #fff;
+  pointer-events: none;
+}
+
+.rspJourneyPhase {
+  padding: 5px 9px;
+  border: 1px solid rgba(255, 255, 255, .3);
+  border-radius: 999px;
+  background: rgba(12, 24, 34, .62);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .35px;
+  line-height: 1.2;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+  backdrop-filter: blur(5px);
+}
+
+.rspMissingStage {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+  color: #fff;
+  text-align: center;
+  background: radial-gradient(ellipse at center, #263746 0%, #111 78%);
+}
+
+.rspMissingEyebrow {
+  color: rgba(255, 255, 255, .68);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+.rspMissingStage strong {
+  font-size: 15px;
+}
+
+.rspMissingStage > span:last-child {
+  max-width: 240px;
+  color: rgba(255, 255, 255, .75);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.rspJourneyProgress {
+  display: flex;
+  width: 100%;
+  gap: 4px;
+}
+
+.rspJourneyProgress span {
+  flex: 1;
+  height: 3px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, .55);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .35);
+}
+
+.rspJourneyProgress .rspJourneyProgressDone,
+.rspJourneyProgress .rspJourneyProgressActive {
+  background: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rspPreview img {
+    animation: none !important;
+  }
+}
