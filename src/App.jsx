@@ -303,7 +303,7 @@ export default function App() {
             </button>
           ))}
           <button className="navLoginBtn" onClick={() => go("login")}>Login</button>
-          <button className="navBookBtn" onClick={() => go("contact")}>Book Ambulance</button>
+          <button className="navBookBtn" onClick={() => go("booking")}>Book Ambulance</button>
         </nav>
       </header>
 
@@ -318,6 +318,7 @@ export default function App() {
       {page === "gallery"     && <GalleryPage    openGalleryDetail={openGalleryDetail} />}
       {page === "galleryDetail" && galleryDetail && <GalleryDetailPage item={GALLERY_ITEMS.find(item => item.key === galleryDetail)} go={go} back={backFromGalleryDetail} backLabel={gallerySource === "gallery" ? "Gallery" : "Home"} />}
       {page === "contact"     && <ContactPage    go={go} submit={submit} submitted={submitted} />}
+      {page === "booking"     && <BookAmbulancePage submit={submit} submitted={submitted} />}
       {page === "livetracking" && <LiveTrackingPage go={go} />}
       {page === "login"       && <LoginPage      go={go} />}
 
@@ -351,7 +352,7 @@ export default function App() {
             <h4>Emergency</h4>
             <p className="footerEmergency">For immediate assistance call:</p>
             <span className="footerPhone">+91 90000 00000</span>
-            <button className="footerBookBtn" onClick={() => go("contact")}>Book Now</button>
+            <button className="footerBookBtn" onClick={() => go("booking")}>Book Now</button>
           </div>
         </div>
         <div className="footerBottom">
@@ -425,7 +426,7 @@ function HomePage({ go, goDetail, openGalleryDetail, submit, submitted }) {
             </div>
           </div>
           <div className="emergencyActions">
-            <button className="btnCoral" onClick={() => go("contact")}>Book Now</button>
+            <button className="btnCoral" onClick={() => go("booking")}>Book Now</button>
             <button className="btnCoralOutline" onClick={() => go("contact")}>Emergency Assistance</button>
           </div>
         </div>
@@ -570,7 +571,7 @@ function HomePage({ go, goDetail, openGalleryDetail, submit, submitted }) {
           <h2>When Every Second Matters,<br />Choose Ambulance First</h2>
           <p>Reliable medical transportation is just a booking away.</p>
           <div className="finalCtaActions">
-            <button className="btnPrimary" onClick={() => go("contact")}>Book an Ambulance</button>
+            <button className="btnPrimary" onClick={() => go("booking")}>Book an Ambulance</button>
             <button className="btnOutlineLight" onClick={() => go("contact")}>Contact Us</button>
           </div>
         </div>
@@ -620,7 +621,7 @@ function HowItWorksPage({ go }) {
       <div className="ctaBox reveal">
         <h2>Ready to get started?</h2>
         <p>Book your ambulance service now and our team will coordinate the rest.</p>
-        <button className="btnPrimary" onClick={() => go("contact")}>Book an Ambulance</button>
+        <button className="btnPrimary" onClick={() => go("booking")}>Book an Ambulance</button>
       </div>
     </PageShell>
   );
@@ -709,7 +710,7 @@ function ServicesPage({ go, goDetail }) {
       <SectionLabel>ALL SERVICES</SectionLabel>
       <div className="allServicesGrid reveal">
         {allServices.map((s) => (
-          <button className="allSvcCard" key={s.title} onClick={() => s.detailKey ? goDetail(s.detailKey) : go("contact")}>
+          <button className="allSvcCard" key={s.title} onClick={() => s.detailKey ? goDetail(s.detailKey) : go("booking")}>
             <span className="allSvcIcon">{s.icon}</span>
             <div>
               <h3>{s.title}</h3>
@@ -856,6 +857,134 @@ function ContactPage({ go, submit, submitted }) {
         </form>
       </div>
     </PageShell>
+  );
+}
+
+/* ── BookAmbulancePage ───────────────────────────────── */
+function BookAmbulancePage({ submit, submitted }) {
+  const initialFormData = {
+    patientName: "",
+    phone: "",
+    pickup: "",
+    destination: "",
+    ambulanceType: "Road Ambulance",
+    date: "",
+    preferredTime: "",
+    assistance: "Basic Patient Transport",
+    notes: "",
+  };
+  const [formData, setFormData] = useState(initialFormData);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    submit(e);
+    setFormData(initialFormData);
+  };
+
+  return (
+    <main className="bookingPage">
+      <section className="bookingHero">
+        <div className="bookingHeroContent">
+          <span className="bookingEyebrow"><span aria-hidden="true">✚</span> 24/7 MEDICAL TRANSPORT COORDINATION</span>
+          <h1>Book an Ambulance</h1>
+          <p>Get reliable medical transportation when you need it most.</p>
+          <a className="bookingHeroCta" href="#booking-form">Request an ambulance <span aria-hidden="true">↓</span></a>
+        </div>
+      </section>
+
+      <section className="bookingContent" id="booking-form">
+        <div className="bookingIntro">
+          <SectionLabel>PLAN A SAFE JOURNEY</SectionLabel>
+          <h2>Tell us what the patient needs.</h2>
+          <p>Share the journey details and our coordination team will follow up to discuss the right transport and care.</p>
+        </div>
+
+        <div className="bookingLayout">
+          <form className="bookingForm" onSubmit={handleSubmit}>
+            <div className="bookingFormHeading">
+              <span className="bookingFormIcon" aria-hidden="true">✚</span>
+              <div>
+                <h3>Ambulance request</h3>
+                <p>Fields marked <span aria-hidden="true">*</span> are required.</p>
+              </div>
+            </div>
+
+            <div className="bookingFields">
+              <label className="bookingField">
+                <span>Patient Name <b aria-hidden="true">*</b></span>
+                <input required name="patientName" value={formData.patientName} onChange={handleChange} autoComplete="name" placeholder="Enter patient's full name" />
+              </label>
+              <label className="bookingField">
+                <span>Phone Number <b aria-hidden="true">*</b></span>
+                <input required type="tel" name="phone" value={formData.phone} onChange={handleChange} autoComplete="tel" inputMode="tel" placeholder="Best number to reach you" />
+              </label>
+              <label className="bookingField">
+                <span>Pickup Location <b aria-hidden="true">*</b></span>
+                <input required name="pickup" value={formData.pickup} onChange={handleChange} autoComplete="street-address" placeholder="Address, city or landmark" />
+              </label>
+              <label className="bookingField">
+                <span>Destination Hospital <b aria-hidden="true">*</b></span>
+                <input required name="destination" value={formData.destination} onChange={handleChange} placeholder="Hospital name or destination" />
+              </label>
+              <label className="bookingField">
+                <span>Ambulance Type <b aria-hidden="true">*</b></span>
+                <select required name="ambulanceType" value={formData.ambulanceType} onChange={handleChange}>
+                  <option>Road Ambulance</option>
+                  <option>Air Ambulance</option>
+                  <option>Train Ambulance</option>
+                </select>
+              </label>
+              <label className="bookingField">
+                <span>Medical Assistance Required <b aria-hidden="true">*</b></span>
+                <select required name="assistance" value={formData.assistance} onChange={handleChange}>
+                  <option>Basic Patient Transport</option>
+                  <option>ICU Support</option>
+                  <option>Emergency Medical Care</option>
+                  <option>Oxygen Support</option>
+                  <option>Doctor / Medical Team</option>
+                </select>
+              </label>
+              <label className="bookingField">
+                <span>Date <b aria-hidden="true">*</b></span>
+                <input required type="date" name="date" value={formData.date} onChange={handleChange} />
+              </label>
+              <label className="bookingField">
+                <span>Preferred Time <b aria-hidden="true">*</b></span>
+                <input required type="time" name="preferredTime" value={formData.preferredTime} onChange={handleChange} />
+              </label>
+              <label className="bookingField bookingFieldWide">
+                <span>Additional Notes</span>
+                <textarea name="notes" value={formData.notes} onChange={handleChange} rows="4" placeholder="Share any important patient or journey details" />
+              </label>
+            </div>
+
+            <button className="bookingSubmit" type="submit">Request Ambulance <span aria-hidden="true">→</span></button>
+            {submitted && <div className="formSuccess" role="status">✓ Request received. Our coordination team will be in touch shortly.</div>}
+          </form>
+
+          <aside className="bookingAside">
+            <div className="bookingSupportCard">
+              <span className="bookingAsideIcon" aria-hidden="true">♡</span>
+              <h3>Coordinated around the patient</h3>
+              <p>Our team will review your route, transport type, and requested medical assistance with you.</p>
+              <div className="bookingSupportDetail"><span aria-hidden="true">◷</span><span><strong>Available around the clock</strong><small>Coordination support, 24/7</small></span></div>
+              <div className="bookingSupportDetail"><span aria-hidden="true">⌖</span><span><strong>Road, air and rail</strong><small>Choose the transport that fits the journey</small></span></div>
+            </div>
+            <div className="bookingEmergency" role="note">
+              <span className="bookingEmergencyIcon" aria-hidden="true">!</span>
+              <div>
+                <h3>Need help right now?</h3>
+                <p>For an urgent or life-threatening emergency, contact your local emergency services immediately. Do not wait for an online request.</p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
   );
 }
 

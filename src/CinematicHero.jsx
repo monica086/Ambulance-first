@@ -113,7 +113,7 @@ export default function CinematicHero({ go }) {
         <p className="chQuote">{slide.quote}</p>
         <p className="chSub">{slide.sub}</p>
         <div className="chActions">
-          <button className="btnPrimary" onClick={() => go("contact")}>
+          <button className="btnPrimary" onClick={() => go("booking")}>
             Book an Ambulance
           </button>
           <button className="btnOutline" onClick={() => go("services")}>

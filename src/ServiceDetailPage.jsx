@@ -309,7 +309,7 @@ export default function ServiceDetailPage({ serviceKey, go }) {
           <h1>{service.title}</h1>
           <p className="sd-hero-subtitle">{service.subtitle}</p>
           <div className="sd-hero-actions">
-            <button className="sd-primary-button" onClick={() => go("contact")}>Request Ambulance</button>
+            <button className="sd-primary-button" onClick={() => go("booking")}>Request Ambulance</button>
             <button className="sd-outline-button" onClick={() => go("contact")}>Contact Us</button>
           </div>
         </div>
@@ -461,7 +461,7 @@ export default function ServiceDetailPage({ serviceKey, go }) {
           <h2>Need medical transportation?</h2>
           <p>Tell us what the patient needs and our team can help coordinate the appropriate transportation option.</p>
           <div className="sd-hero-actions">
-            <button className="sd-primary-button" onClick={() => go("contact")}>Request Ambulance</button>
+            <button className="sd-primary-button" onClick={() => go("booking")}>Request Ambulance</button>
             <button className="sd-outline-button" onClick={() => go("contact")}>Contact Us</button>
           </div>
           <button className="sd-back sd-back-bottom" onClick={() => go("services")}>← Back to Services</button>
